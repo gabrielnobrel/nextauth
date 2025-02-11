@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<h1 align="center">
+    Fluxo de autenticação no Next.js
+</h1>
+<p align="center">Aplicação em Next.JS para autenticação utilizando ContextAPI e Cookies</p>
 
-## Getting Started
+<p align="center">
+ <a href="#sobre-o-projeto">Sobre o Projeto</a> •
+ <a href="#tecnologias">Tecnologias</a> •
+ <a href="#configurações-necessárias">Configurações necessárias</a> •
+ <a href="#licença">Licença</a> •
+ <a href="#autor">Autor</a>
+</p>
 
-First, run the development server:
+## Sobre o projeto
+
+Este projeto tem como foco o estudo e desenvolvimento de uma aplicação em Next.js para autenticação e gerenciamento de permissões de acesso.
+
+A aplicação foi construída utilizando o framework Next.js, implementando um fluxo de autenticação com Context API e Cookies. Esse controle de autenticação e permissões é realizado tanto no lado do servidor (Server-side) quanto no lado do cliente (Client-side).
+
+---
+
+## Tecnologias
+
+Abaixo as tecnologias utilizadas para construção da aplicação
+
+- [ReactJS](https://reactjs.org/)
+- [NextJS](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Nookies](https://github.com/maticzav/nookies)
+
+---
+
+## Configurações necessárias
+
+### **Requisitos**
+
+Necessário realizar as instalações:
+
+- [Git](https://git-scm.com/)
+- [Yarn](https://classic.yarnpkg.com)
+
+### **Clone do projeto**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Execute o comando git clone para realizar o clone do repositório
+$ git clone https://github.com/nelsonsantosaraujo/nextauth.git
+# Entre na pasta do repositório clonado
+$ cd nextauth
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **Iniciando o projeto**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Execute yarn para instalar as dependências
+$ yarn
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Para iniciar a aplicação
+$ yarn dev
 
-## Learn More
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Licença
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Distribuído sob a licença MIT.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Autor
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Feito por Gabriel Nobrel 🖖👽 Entre em contato!
+<a href="https://www.linkedin.com/in/gabrielnobrel" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
+<a href = "mailto:gabriel_nobresantos@hotmail.com"><img src="https://img.shields.io/badge/-Outlook-%23333?style=for-the-badge&logo=outlook&color=113B6D" target="_blank"></a>
