@@ -1,3 +1,4 @@
+import { signOut } from "@/contexts/AuthContext";
 import axios, { AxiosError } from "axios";
 import { parseCookies, setCookie } from "nookies";
 
@@ -78,8 +79,7 @@ api.interceptors.response.use(
           });
         });
       } else {
-        // Logout do usuário caso o erro não seja "token.expired"
-        return Promise.reject(error);
+        signOut();
       }
     }
 
