@@ -87,7 +87,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
       router.push("/dashboard");
-      console.log(response.data);
     } catch (error) {
       console.log("Erro na captura dos dados", error);
     }

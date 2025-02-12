@@ -1,14 +1,12 @@
 // pages/login.tsx
 "use client";
-import { useState, FormEvent, useContext, useEffect } from "react";
+import { useState, FormEvent, useContext } from "react";
 import { AuthContext } from "@/contexts/AuthContext";
-import { useRouter } from "next/navigation"; // Certifique-se de usar a navegação do Next 13
-import { api } from "@/services/api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { signIn, isAuthenticated } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();

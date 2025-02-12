@@ -1,6 +1,7 @@
 import { signOut } from "@/contexts/AuthContext";
 import axios, { AxiosError } from "axios";
 import { parseCookies, setCookie } from "nookies";
+import { AuthTokenError } from "./errors/AuthTokenError";
 
 interface APIErrorResponse {
   code?: string;
@@ -61,6 +62,10 @@ api.interceptors.response.use(
             .catch((err) => {
               failedRequestsQueue.forEach((request) => request.onFailure(err));
               failedRequestsQueue = [];
+
+              if (typeof window !== "undefined") {
+                signOut();
+              }
             })
             .finally(() => {
               isRefreshing = false;
@@ -79,7 +84,11 @@ api.interceptors.response.use(
           });
         });
       } else {
-        signOut();
+        if (typeof window !== "undefined") {
+          signOut();
+        } else {
+          return Promise.reject(new AuthTokenError());
+        }
       }
     }
 
