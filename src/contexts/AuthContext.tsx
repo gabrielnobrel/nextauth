@@ -44,6 +44,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     const { "nextauth.token": token } = parseCookies();
 
+    // Sempre verificar as informações do usuário
     if (token) {
       api
         .get("/me")
@@ -68,9 +69,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const { token, refreshToken, permissions, roles } = response.data;
 
-      // Aramazenar o token no cookie
+      // Armazenar o token no cookie
       setCookie(undefined, "nextauth.token", token, {
-        //tempo de armazenamento do cookie
+        // Tempo de armazenamento do cookie
         maxAge: 60 * 60 * 24 * 30, // 30 dias
         // A parte da aplicação terá acesso ao token
         path: "/",
