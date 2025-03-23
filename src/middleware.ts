@@ -8,18 +8,17 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("nextauth.token")?.value;
   const { pathname } = request.nextUrl;
 
-  if (token && pathname === "/") {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
+  // Verifica se a rota atual está na lista de rotas protegidas
+  const routeConfig = protectedRoutes[pathname];
 
-  if (!token && pathname !== "/") {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
+  if (routeConfig) {
+    if (!token) {
+      // Redireciona para a página inicial se o usuário não estiver autenticado
+      return NextResponse.redirect(new URL("/", request.url));
+    }
 
-  const routeConfig = protectedRoutes[pathname as keyof typeof protectedRoutes];
-
-  if (routeConfig && token) {
     try {
+      // Decodifica o token JWT
       const decodedToken = jwtDecode<{
         permissions: string[];
         roles: string[];
@@ -30,7 +29,7 @@ export function middleware(request: NextRequest) {
         roles: decodedToken.roles || [],
       };
 
-      // Usa a função validateUserPermissions para verificar se o usuário tem acesso
+      // Verifica se o usuário tem permissão para acessar a rota
       const hasAccess = validateUserPermissions({
         user,
         permissions: routeConfig.permissions,
@@ -38,17 +37,20 @@ export function middleware(request: NextRequest) {
       });
 
       if (!hasAccess) {
+        // Redireciona para uma página de "não autorizado" se o usuário não tiver permissão
         return NextResponse.redirect(new URL("/unauthorized", request.url));
       }
     } catch (error) {
+      // Redireciona para a página inicial em caso de erro ao decodificar o token
       return NextResponse.redirect(new URL("/", request.url));
     }
   }
 
+  // Permite o acesso à rota
   return NextResponse.next();
 }
 
-// Aplica o middleware apenas para as rotas protegidas
+// Aplica o middleware a todas as rotas
 export const config = {
-  matcher: Object.keys(protectedRoutes),
+  matcher: "/:path*", // Aplica o middleware a todas as rotas
 };

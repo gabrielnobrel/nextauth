@@ -16,7 +16,8 @@ type SigInCredentials = {
 };
 
 type AuthContextData = {
-  signIn(credentials: SigInCredentials): Promise<void>;
+  signIn: (credentials: SigInCredentials) => Promise<void>;
+  signOut: () => void;
   user: User | null;
   isAuthenticated: boolean;
 };
@@ -27,9 +28,14 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext({} as AuthContextData);
 
+// deslogar em todas as páginas
+let authChannel: BroadcastChannel;
+
 export function signOut() {
   destroyCookie(undefined, "nextauth.token");
   destroyCookie(undefined, "nextauth.refreshToken");
+
+  authChannel.postMessage("signOut");
 
   if (typeof window !== "undefined") {
     window.location.href = "/";
@@ -40,6 +46,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null); // armazenar dados do usuário
   const isAuthenticated = !!user;
   const router = useRouter();
+
+  useEffect(() => {
+    authChannel = new BroadcastChannel("auth");
+
+    authChannel.onmessage = (message) => {
+      switch (message.data) {
+        case "signOut":
+          signOut();
+          break;
+        default:
+          break;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const { "nextauth.token": token } = parseCookies();
@@ -88,13 +108,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
       router.push("/dashboard");
+      authChannel.postMessage("signIn");
     } catch (error) {
       console.log("Erro na captura dos dados", error);
     }
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated, user }}>
+    <AuthContext.Provider value={{ signIn, signOut, isAuthenticated, user }}>
       {children}
     </AuthContext.Provider>
   );

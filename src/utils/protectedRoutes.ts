@@ -3,7 +3,7 @@ export const protectedRoutes: Record<
   { permissions: string[]; roles: string[] }
 > = {
   "/metrics": {
-    permissions: ["metrics.list3"],
+    permissions: ["metrics.list"],
     roles: ["administrator"],
   },
 };
